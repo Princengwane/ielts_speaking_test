@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "ielts-speaking-test-449310",
+  "private_key_id": "1970760c981ba84921492d207d0b63e92a1fc32c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC8jLGp/zAl2VEI\nEAhjv6MGa9UA63u/qvE/TlPF6Ht42LFRB9Xw1XaskXhBJSQEe5QJN/muql24Grwh\nbHoqSccv3D60qEXmjb67d+finzJZZSbBL6AcShCHLw3DixbF6SQ2s5SO2tW5YnqI\nGazmTsShI2co3nYP+DGPCIj9WdPSi/tA/ADJSVkQGaIY6jUQNCIKVGMTdWFJcx5H\nv0Qio9v7PsMk9CoKRZ9KELR6UaloZmGPPSXyslD04dNkTI5fYLqyGQEdv4IsKUTp\nYkBkNu51UJGtjqnwCPI2weirqVOU2j6LW5tSnhE562GuTIhibXfBo49bs5MFLo2z\noOmINZwrAgMBAAECggEAOFgxBXSRblYVTXwBDdHoRVR3CDnWtq2+PyVIioVRVIko\n3+agC8K2npYwIgOX0lEdqW2VSxl1PT2cB77zeOyoPgiqonEAxoeIPlx0KrhZIvbD\n0IpLZfjKHKO2kL9hVE45+LDMja4enTItHLvTe9WBFAhQ3Rkxnc8U/EHYMiGkV6/i\nPOs9mU/UTt7Xf+uFJtEhdKBpwUjKm8uIyiUGWmTvJkLdXlnoGx2XGFc9CKT2HI8Y\nxNc/fc6wt5kTefixUNpyccMtBebmm8Ss5RxIwY9Umv8ldGaolTJBs4M4ih/E69gh\nI+sZ1Kw5tUbfcEW6YA6M8nzAejkiqqjepBhRyHxNIQKBgQDyIUiF6gPnpLqR9bmD\nl6VVVtmx0HCLuC5L1S4FEyGqPv+MFBLbSK+cIngw81sbBrYOiT1q3Dcb5zF7Wf1U\nrT6tDRdKpFZxPhmKSrYuGuJkgSHj4PB60iVU01c2PV9amYobN2sQ4ahznfTyYmTr\nfun5InTcX+T7YK0ZfJKpviWuoQKBgQDHWa4nL/TXnDsa2J+Lsj0qBaseGX1rudP5\nYqe5EKe1htzMMKWd7iunHmOWsru5abSYLD1VLmMEm0NaLUYQozBUgLSUjx+O3Z0b\n3lW48cGUZnhiL6w3cfsG/W74gMFKCXZcBMS/b7KCAIcTRwAved0c+gv5mmIX4kMF\nL4iTDsWTSwKBgG7BXsUyyFp7dYQynItfIJeqxKWbrP+cXkD94LEdkTao3oga3o1D\n8GBBPC1YBAKWzUxU5q0s0mCHHpFIFqNXI+ZQqKjSB2CBgXlKt47baVeD4ha03Auy\neLUWfzwmUqnEtfHBJc5xCnboeBUvgO5f/XKimkX772g1TrjrzMKsYdxBAoGAQ9Ef\nbNdkrODKPqTJCgYVxrDs+K1lPHuYQDOuqUegNiHuBUzbWrHGifDNolulfzsVo9sQ\n9mR0bQHA1PGn70sEywqJ5CwYaUq9AtkNQoCEAU8mzwg2xxnwcv1Ofh2XI++6Iy3A\nHPwLtywkx4sU5hHIBe6OmlhJ3KQtdpsoFBcnYacCgYEA3mZ1Bu1GN1bD9uNSCSNd\neiB7TCV80sXQqyQmXsazcixH2jiNHOLKLfjIThc65kkYXRz/yh+MRtrD1ZY8SLd/\n5MjpfgrbtSa6ZhK0fzQ4Ha5cDoWXD/xWEFyoBrjSsdBKyoZqvGN0gla76sT8BbL5\n28wBbThiBeZEL52hrGDSuew=\n-----END PRIVATE KEY-----\n",
+  "client_email": "ielts-speaking-test-449310@ielts-speaking-test-449310.iam.gserviceaccount.com",
+  "client_id": "105595261462844906915",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ielts-speaking-test-449310%40ielts-speaking-test-449310.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

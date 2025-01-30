@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Speaking Test Simulation</title>
+    <style>
+        #conversation {
+            margin-top: 20px;
+        }
+        #time-left {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: red;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>IELTS Speaking Test Simulation</h1>
+
+    <!-- Mode Selection Buttons -->
+    <button id="practice-mode-btn" onclick="startPracticeMode()">Start Recording (Practice Mode)</button>
+    <button id="test-mode-btn" class="hidden" onclick="startTestMode()">Start Recording (Test Mode)</button>
+
+    <h2 id="mode-title">Practice Mode</h2> <!-- Display the current mode -->
+
+    <!-- Time Left Display (only visible in Test Mode) -->
+    <div id="time-left" class="hidden">Time Left: 0:00</div>
+
+    <!-- Stop Recording Button (Practice Mode only) -->
+    <button id="stop-recording-btn" class="hidden" onclick="stopRecording()">Stop Recording</button>
+
+    <!-- Conversation Display (User Input and Examiner Response) -->
+    <div id="conversation"></div>
+
+    <!-- PDF Download Button (hidden by default) -->
+    <button id="download-btn" class="hidden" onclick="downloadPDF()">Download PDF Report</button>
+
+    <script>
+        let recorder;
+        let currentMode = 'practice';  // Default to Practice Mode
+        let timer;
+        let timeLeft = 30; // 30 seconds for Test Mode
+        let interval;
+        let silenceTimeout;
+        let audioChunks = [];
+
+        // Start Recording in Practice Mode
+        function startPracticeMode() {
+            setMode('practice');
+            startRecording();
+            document.getElementById('test-mode-btn').classList.add('hidden');  // Hide Test Mode button
+            document.getElementById('stop-recording-btn').classList.remove('hidden');  // Show Stop button
+        }
+
+        // Start Recording in Test Mode
+        function startTestMode() {
+            setMode('test');
+            startRecording();
+            document.getElementById('practice-mode-btn').classList.add('hidden');  // Hide Practice Mode button
+        }
+
+        // Set Mode (Practice or Test)
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById("mode-title").textContent = mode.charAt(0).toUpperCase() + mode.slice(1) + " Mode"; // Update mode title
+
+            if (mode === 'test') {
+                timeLeft = 30; // Test Mode: 30 seconds timer
+                document.getElementById("time-left").classList.remove('hidden');  // Show time left
+                startTimer();  // Start the timer
+            } else {
+                timeLeft = 0; // No timer for Practice Mode
+                document.getElementById("time-left").classList.add('hidden');  // Hide time left
+            }
+        }
+
+        // Start Timer for Time Left (for Test Mode only)
+        function startTimer() {
+            interval = setInterval(function() {
+                if (timeLeft <= 0) {
+                    clearInterval(interval); // Stop the timer
+                    alert("Time's up! Please finish your test.");
+                    stopRecording();  // Automatically stop recording when time is up
+                    return;
+                }
+
+                timeLeft--;
+                updateTimeLeft();
+            }, 1000); // Update every second
+        }
+
+        // Update the Time Left Display
+        function updateTimeLeft() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById("time-left").textContent = `Time Left: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
+
+        // Start Recording Function
+        async function startRecording() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            recorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            recorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+                clearTimeout(silenceTimeout);  // Reset silence detection on new data
+                if (currentMode === 'practice') {
+                    silenceTimeout = setTimeout(stopRecording, 3000); // 3 seconds of silence to stop recording
+                }
+            };
+
+            recorder.onstop = async () => {
+                const audioBlob = new Blob(audioChunks);
+                const formData = new FormData();
+                formData.append("audio", audioBlob, "user_audio.wav");
+
+                const response = await fetch('/process_audio', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+                document.getElementById("conversation").innerHTML = 
+                    `<p><strong>User:</strong> ${result.user_input}</p>
+                    <p><strong>Examiner:</strong> ${result.examiner_response}</p>`;
+                
+                // After recording, show the Download PDF button
+                document.getElementById('download-btn').classList.remove('hidden');
+            };
+
+            recorder.start();
+        }
+
+        // Stop Recording Function
+        function stopRecording() {
+            if (recorder && recorder.state !== 'inactive') {
+                recorder.stop();
+            }
+            document.getElementById('test-mode-btn').classList.remove('hidden');  // Show Test Mode button again
+            document.getElementById('practice-mode-btn').classList.remove('hidden');  // Show Practice Mode button again
+            document.getElementById('stop-recording-btn').classList.add('hidden');  // Hide Stop button
+        }
+
+        // Download PDF Function
+        async function downloadPDF() {
+            const conversation = document.getElementById("conversation").innerHTML;
+            const response = await fetch('/generate_pdf_report', {
+                method: 'POST',
+                body: JSON.stringify({
+                    conversation: conversation,
+                    feedback: { grammar_score: 8, fluency_score: 7 }
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'ielts_speaking_test_report.pdf'; // Default filename
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
